@@ -9,3 +9,17 @@ CREATE TABLE public.account
     PRIMARY KEY (id)
 );
 
+CREATE TABLE public.role
+(
+    id bigserial NOT NULL,
+    name character varying(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE public.account_role
+(
+    account_id bigint,
+    role_id bigint
+);
+
+
