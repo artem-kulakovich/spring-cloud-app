@@ -1,6 +1,7 @@
 package by.bntu.fitr.accountservice.entity;
 
 
+import by.bntu.fitr.accountservice.entity.dto.AccountCreateDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -66,6 +67,15 @@ public class Account {
         this.userName = userName;
         this.password = password;
         this.email = email;
+    }
+
+    public Account(AccountCreateDTO accountCreateDTO) {
+        this.firstName = accountCreateDTO.getFirstName();
+        this.lastName = accountCreateDTO.getLastName();
+        this.userName = accountCreateDTO.getUserName();
+        this.email = accountCreateDTO.getEmail();
+        this.password = accountCreateDTO.getPassword();
+        this.roleList = accountCreateDTO.getRoleList();
     }
 
     public void addRole(Role role) {
