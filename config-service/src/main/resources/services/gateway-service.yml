@@ -8,10 +8,10 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/api/v1/accounts/**
-        - id: frontend
+        - id: task-service
           uri: http://localhost:8082
           predicates:
-            - Path=/ishop/**
+            - Path=/api/v2/tasks/**
 
 server:
   port: 8989
