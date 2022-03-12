@@ -46,7 +46,7 @@ public class Account {
     private String email;
 
     @JsonProperty(value = "roleList")
-    @ManyToMany()
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(
             name = "account_role"
             , joinColumns = @JoinColumn(name = "account_id")

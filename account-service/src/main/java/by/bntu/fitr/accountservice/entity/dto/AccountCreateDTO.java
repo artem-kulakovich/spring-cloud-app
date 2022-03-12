@@ -11,6 +11,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
+@Setter
 public class AccountCreateDTO {
 
     @JsonProperty(value = "firstName")
