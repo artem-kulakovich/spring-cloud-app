@@ -6,12 +6,12 @@ import by.bntu.fitr.accountservice.exception.*;
 import by.bntu.fitr.accountservice.model.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
-@ControllerAdvice
+@RestControllerAdvice
 public class AccountAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PasswordMismatchException.class)
@@ -44,4 +44,9 @@ public class AccountAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Response> handleValidationException(ValidationException e) {
+        Response response = new Response(HttpStatusReasonConstant.BAD_VALIDATION, e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

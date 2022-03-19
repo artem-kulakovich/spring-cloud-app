@@ -7,4 +7,5 @@ public interface HttpStatusReasonConstant {
     String ALREADY_EXISTS = "already exists";
     String ACCOUNT_NOT_FOUND = "account_nof_found";
     String NOT_FOUND = "not found";
+    String BAD_VALIDATION = "bad validation";
 }

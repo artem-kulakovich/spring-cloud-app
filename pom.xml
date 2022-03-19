@@ -15,6 +15,8 @@
         <module>gateway-service</module>
         <module>account-service</module>
         <module>task-service</module>
+        <module>authentication-service</module>
+        <module>frontend</module>
     </modules>
 
 </project>
