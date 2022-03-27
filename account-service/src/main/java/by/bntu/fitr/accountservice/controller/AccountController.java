@@ -10,7 +10,6 @@ import by.bntu.fitr.accountservice.service.AccountService;
 import by.bntu.fitr.accountservice.validator.AccountValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.client.methods.HttpHead;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -74,7 +73,6 @@ public class AccountController {
                 json.put("JWTHeader", new ObjectMapper().writeValueAsString(new JSONHeader("HS256", "JWT")));
                 json.put("JWTPayload", new ObjectMapper().writeValueAsString(new JSONPayload(userName, roleNames)));
                 token = authenticationServiceClient.createJwt(json);
-
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
