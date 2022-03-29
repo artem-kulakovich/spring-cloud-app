@@ -14,5 +14,5 @@ public interface AccountServiceClient {
     AccountCreateDto saveAccount(@RequestBody AccountCreateDto accountCreateDto);
 
     @PostMapping(value = "/api/v1/accounts/login")
-    void login(@RequestBody Map<String, String> params);
+    String login(@RequestBody Map<String, String> params);
 }

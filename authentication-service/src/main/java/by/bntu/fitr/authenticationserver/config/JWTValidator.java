@@ -1,10 +1,12 @@
 package by.bntu.fitr.authenticationserver.config;
 
+import by.bntu.fitr.authenticationserver.dto.JWTResponseDTO;
+
 import java.util.Map;
 
 public interface JWTValidator {
 
-    Map<String, String> parseToken(String token);
+    JWTResponseDTO parseToken(String token);
 
-    boolean validateToken(Map<String, String> tokenParts, String token);
+    boolean validateToken(JWTResponseDTO jwtResponseDTO, String token);
 }

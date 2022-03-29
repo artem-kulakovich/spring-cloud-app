@@ -27,9 +27,9 @@ public class AccountServiceClientWrapper {
         return null;
     }
 
-    public void login(Map<String, String> params) {
+    public String login(Map<String, String> params) {
         try {
-            accountServiceClient.login(params);
+            return accountServiceClient.login(params);
         } catch (FeignException e) {
             System.out.println(e.getMessage());
             FeignResponse feignResponse = new FeignResponse(e.getMessage());
@@ -37,7 +37,7 @@ public class AccountServiceClientWrapper {
             System.out.println(feignResponse.getStatusCode());
             System.out.println(feignResponse.getUri());
             System.out.println(feignResponse.getResponse());
-
+            throw new RuntimeException();
         }
     }
 

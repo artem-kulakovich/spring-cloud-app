@@ -1,15 +1,13 @@
 package by.bntu.fitr.accountservice.controller;
 
+import by.bntu.fitr.accountservice.constant.JWTConstant;
 import by.bntu.fitr.accountservice.entity.Account;
 import by.bntu.fitr.accountservice.entity.Role;
 import by.bntu.fitr.accountservice.entity.dto.AccountCreateDTO;
+import by.bntu.fitr.accountservice.entity.dto.JWTDTO;
 import by.bntu.fitr.accountservice.feign.AuthenticationServiceClient;
-import by.bntu.fitr.accountservice.json.JSONHeader;
-import by.bntu.fitr.accountservice.json.JSONPayload;
 import by.bntu.fitr.accountservice.service.AccountService;
 import by.bntu.fitr.accountservice.validator.AccountValidator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,8 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.HashMap;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,24 +58,19 @@ public class AccountController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> login(@RequestBody Map<String, String> params) {
-        String token = null;
+    public ResponseEntity<?> login(@RequestBody Map<String, String> params, HttpServletResponse httpServletResponse) {
         String userName = params.get("userName");
         String password = params.get("password");
+        String token = null;
         if (accountService.login(userName, password)) {
             List<String> roleNames = accountService.getRoleByUserName(userName).stream()
                     .map(Role::getName).collect(Collectors.toList());
-            try {
-                Map<String, String> json = new HashMap<>();
-                json.put("JWTHeader", new ObjectMapper().writeValueAsString(new JSONHeader("HS256", "JWT")));
-                json.put("JWTPayload", new ObjectMapper().writeValueAsString(new JSONPayload(userName, roleNames)));
-                token = authenticationServiceClient.createJwt(json);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            JWTDTO jwtdto = new JWTDTO();
+            jwtdto.setParams(JWTConstant.HS256, JWTConstant.JWT, userName, roleNames.toString());
+            token = authenticationServiceClient.createJwt(jwtdto);
+            httpServletResponse.setHeader("test", token);
         }
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authenticated", token);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(token, HttpStatus.OK);
+
     }
 }

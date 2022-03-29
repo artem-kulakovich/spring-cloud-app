@@ -1,8 +1,9 @@
 package by.bntu.fitr.authenticationserver.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import by.bntu.fitr.authenticationserver.dto.JWTRequestDTO;
+import by.bntu.fitr.authenticationserver.dto.JWTResponseDTO;
 
 
 public interface JWTProvider {
-    String createToken(String header, String payload);
+    JWTResponseDTO createToken(JWTRequestDTO jwtRequestDTO);
 }

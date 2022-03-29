@@ -1,6 +1,7 @@
 package by.bntu.fitr.authenticationserver.config;
 
 import by.bntu.fitr.authenticationserver.constant.JWTConstant;
+import by.bntu.fitr.authenticationserver.dto.JWTResponseDTO;
 import by.bntu.fitr.authenticationserver.utils.HmacSHA256Custom;
 import by.bntu.fitr.authenticationserver.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +18,22 @@ public class JWTValidatorImpl implements JWTValidator {
     private JWTUtil jwtUtil;
 
     @Override
-    public Map<String, String> parseToken(String token) {
+    public JWTResponseDTO parseToken(String token) {
         String[] parts = token.split(".");
-        Map<String, String> tokenParts = new HashMap<>();
-        tokenParts.put(JWTConstant.JWT_HEADER, parts[0]);
-        tokenParts.put(JWTConstant.JWT_PAYLOAD, parts[1]);
-        tokenParts.put(JWTConstant.JWT_SIGNATURE, parts[2]);
-        return tokenParts;
+        JWTResponseDTO jwtResponseDTO = new JWTResponseDTO();
+        jwtResponseDTO.setHeader(parts[0]);
+        jwtResponseDTO.setPayload(parts[1]);
+        jwtResponseDTO.setSignature(parts[2]);
+        return jwtResponseDTO;
     }
 
     @Override
-    public boolean validateToken(Map<String, String> tokenParts, String token) {
-        String header = jwtUtil.decodeHeader(tokenParts.get("header"));
-        String payload = jwtUtil.decodePayload(tokenParts.get("payload"));
-
+    public boolean validateToken(JWTResponseDTO jwtResponseDTO, String token) {
+        String unSignedToken = jwtResponseDTO.getHeader() + "." + jwtResponseDTO.getPayload();
+        String assignedToken = hmacSHA256Custom.encode(unSignedToken);
+        if (assignedToken.equals(jwtResponseDTO.getSignature())) {
+            return true;
+        }
         return false;
     }
 

@@ -1,5 +1,6 @@
 package by.bntu.fitr.accountservice.feign;
 
+import by.bntu.fitr.accountservice.entity.dto.JWTDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,6 @@ import java.util.Map;
 public interface AuthenticationServiceClient {
 
     @PostMapping(value = "/api/v1/jwt")
-    String createJwt(@RequestBody Map<String, String> params);
+    String createJwt(@RequestBody JWTDTO jwt);
 }
 
