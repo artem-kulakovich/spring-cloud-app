@@ -3,7 +3,6 @@ package by.bntu.fitr.accountservice.entity.dto;
 import by.bntu.fitr.accountservice.constant.JWTConstant;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
@@ -16,7 +15,6 @@ public class JWTDTO {
     private Map<String, String> header;
     @JsonProperty(value = "payload")
     private Map<String, String> payload;
-
 
     public JWTDTO(Map<String, String> header, Map<String, String> payload) {
         this.header = header;

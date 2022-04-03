@@ -1,4 +1,4 @@
-package by.bntu.fitr.authenticationserver.config;
+package by.bntu.fitr.authenticationserver.jwt;
 
 import by.bntu.fitr.authenticationserver.dto.JWTRequestDTO;
 import by.bntu.fitr.authenticationserver.exception.CantCreateJWTTokenException;
@@ -32,7 +32,6 @@ public class JWTProviderImpl implements JWTProvider {
         } catch (JsonProcessingException e) {
             throw new CantCreateJWTTokenException("cant create jwt exception");
         }
-        //String jwtToken = unSignedToken + "." + jwtUtil.encodeSignature(signature);
     }
 
 

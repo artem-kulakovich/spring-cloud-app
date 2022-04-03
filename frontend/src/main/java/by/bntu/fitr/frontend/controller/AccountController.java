@@ -50,6 +50,13 @@ public class AccountController {
     public String login(@RequestParam Map<String, String> params, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
         String token = accountServiceClientWrapper.login(params);
         System.out.println(token);
+        Cookie[] cookies = httpServletRequest.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("kekus")) {
+                System.out.println(cookie.getValue());
+            }
+        }
+
         httpServletResponse.addCookie(new Cookie("ishopJWT", token));
         return "redirect:/registration";
     }

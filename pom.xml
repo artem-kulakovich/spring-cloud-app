@@ -17,6 +17,7 @@
         <module>task-service</module>
         <module>authentication-service</module>
         <module>frontend</module>
+        <module>notification-service</module>
     </modules>
 
 </project>

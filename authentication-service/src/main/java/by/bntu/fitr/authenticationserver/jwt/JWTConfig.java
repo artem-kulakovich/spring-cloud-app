@@ -1,6 +1,5 @@
-package by.bntu.fitr.authenticationserver.config;
+package by.bntu.fitr.authenticationserver.jwt;
 
-import by.bntu.fitr.authenticationserver.utils.HmacSHA256Custom;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

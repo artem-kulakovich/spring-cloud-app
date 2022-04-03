@@ -1,4 +1,4 @@
-package by.bntu.fitr.accountservice.feign;
+package by.bntu.fitr.accountservice.feign.rest;
 
 import by.bntu.fitr.accountservice.entity.dto.JWTDTO;
 import org.springframework.cloud.openfeign.FeignClient;

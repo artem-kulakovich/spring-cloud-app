@@ -1,8 +1,7 @@
-package by.bntu.fitr.authenticationserver.config;
+package by.bntu.fitr.authenticationserver.jwt;
 
 import by.bntu.fitr.authenticationserver.dto.JWTResponseDTO;
 
-import java.util.Map;
 
 public interface JWTValidator {
 

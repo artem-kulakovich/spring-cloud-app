@@ -1,8 +1,7 @@
 spring:
   application:
-    name: discovery-service
+    name: authentication-service
   cloud:
     config:
       uri: http://localhost:8001
       fail-fast: true
-

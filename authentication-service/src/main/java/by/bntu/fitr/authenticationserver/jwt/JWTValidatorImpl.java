@@ -1,14 +1,10 @@
-package by.bntu.fitr.authenticationserver.config;
+package by.bntu.fitr.authenticationserver.jwt;
 
-import by.bntu.fitr.authenticationserver.constant.JWTConstant;
 import by.bntu.fitr.authenticationserver.dto.JWTResponseDTO;
 import by.bntu.fitr.authenticationserver.utils.HmacSHA256Custom;
 import by.bntu.fitr.authenticationserver.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class JWTValidatorImpl implements JWTValidator {
     @Autowired

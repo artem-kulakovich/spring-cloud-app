@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
@@ -58,13 +57,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> getAccounts() {
-        return accountRepository.findAll();
+        List<Account> accountList = accountRepository.findAll();
+        if (accountList == null || accountList.isEmpty()) {
+            throw new AccountNotFoundException("account not found exception");
+        }
+        return accountList;
     }
 
     @Override
     public Account getAccount(Long id) {
         return accountRepository.findById(id).orElseThrow(() ->
-                new AccountNotFoundException("account not found exception"));
+                new AccountNotFoundException("accounts not found exception"));
     }
 
     @Override
