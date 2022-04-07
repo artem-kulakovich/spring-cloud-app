@@ -1,4 +1,4 @@
-package by.bntu.fitr.accountservice.swagger;
+package by.bntu.fitr.accountservice.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

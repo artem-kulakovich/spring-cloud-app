@@ -4,6 +4,7 @@ import by.bntu.fitr.accountservice.constant.JWTConstant;
 import by.bntu.fitr.accountservice.entity.Account;
 import by.bntu.fitr.accountservice.entity.Role;
 import by.bntu.fitr.accountservice.entity.dto.AccountCreateDTO;
+import by.bntu.fitr.accountservice.entity.dto.EmailDTO;
 import by.bntu.fitr.accountservice.entity.dto.JWTDTO;
 import by.bntu.fitr.accountservice.feign.rest.AuthenticationServiceClient;
 import by.bntu.fitr.accountservice.service.AccountService;
@@ -11,9 +12,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,21 +29,27 @@ import java.util.stream.Collectors;
 @Api(value = "account-service", description = "account management operations")
 @RestController
 @RequestMapping("/api/v1/accounts")
+@PropertySource("classpath:kafka.properties")
 public class AccountController {
     private final AccountService accountService;
     private final AuthenticationServiceClient authenticationServiceClient;
+    private final KafkaTemplate<String, EmailDTO> emailKafkaTemplate;
+
 
     @Autowired
     public AccountController(AccountService accountService,
-                             AuthenticationServiceClient authenticationServiceClient) {
+                             AuthenticationServiceClient authenticationServiceClient,
+                             @Qualifier(value = "emailKafkaTemplate") KafkaTemplate<String, EmailDTO> emailKafkaTemplate) {
         this.accountService = accountService;
         this.authenticationServiceClient = authenticationServiceClient;
+        this.emailKafkaTemplate = emailKafkaTemplate;
     }
 
     @ApiOperation(value = "registrate new user", response = Account.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addAccount(@RequestBody @Valid AccountCreateDTO accountCreateDTO) {
         Account account = accountService.addAccount(accountCreateDTO);
+        emailKafkaTemplate.send("notification-topic", new EmailDTO("artemkulakovich@gmail.com", "hello", "hi"));
         return new ResponseEntity<>(account, HttpStatus.CREATED);
     }
 
